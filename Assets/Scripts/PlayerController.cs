@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //move and jump speed
+    public static PlayerController instance; // reference to the player controller
+    
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public float gravityScale = 5f;
@@ -14,6 +15,11 @@ public class PlayerController : MonoBehaviour
     public GameObject playerModel;
     public float rotateSpeed = 15f;
     public Animator anim;
+
+    private void Awake()
+    {
+        instance = this; // set the instance to this player controller
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +31,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         float yStore = moveDirection.y; // store the y value of the move direction
-        // moveDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));// get the input from the player
         moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal")); // get the input from the player
         moveDirection.Normalize(); // normalize the input that is the player can't move faster diagonally
         moveDirection = moveDirection * moveSpeed; // multiply the input by the move speed
@@ -33,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
         if (charController.isGrounded) // if the player is on the ground
         {
-            // moveDirection.y = 0f; // set the y value of the move direction to 0
+            // moveDirection.y = -0.1f; // for the player to not fall through the ground
             if (Input.GetButtonDown("Jump")) // if the player presses the jump button
             {
                 moveDirection.y = jumpForce; // jump
