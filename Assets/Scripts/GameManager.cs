@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance; // reference to the game manager
+    public static GameManager instance; 
 
-    private Vector3 respawnPosition; // the respawn position
+    private Vector3 respawnPosition;
+    public GameObject deathEffect;
 
     private void Awake()
     {
@@ -37,12 +38,14 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator RespawnCo()
     {
-        PlayerController.instance.gameObject.SetActive(false); // deactivate the player for a moment
-        CameraController.instance.theCMBrain.enabled = false; // disable the cinemachine brain
-        UIManager.instance.fadeToBlack = true; // fade to black
+        PlayerController.instance.gameObject.SetActive(false); 
+        CameraController.instance.theCMBrain.enabled = false;
+        UIManager.instance.fadeToBlack = true; 
+        Instantiate(deathEffect, PlayerController.instance.transform.position+new Vector3(0f,1f,0f), PlayerController.instance.transform.rotation); 
 
-        yield return new WaitForSeconds(2f); // wait for 2 seconds
+        yield return new WaitForSeconds(2f);
 
+        HealthManager.instance.ResetHealth(); 
         UIManager.instance.fadeFromBlack = true; // fade from black
         PlayerController.instance.transform.position = respawnPosition; // set the player's position to the respawn position
         CameraController.instance.theCMBrain.enabled = true; // enable the cinemachine brain        
