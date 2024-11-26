@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.visible = false; // hide the cursor      
-        Cursor.lockState = CursorLockMode.Locked; // lock the cursor  
+        // Cursor.visible = false; // hide the cursor      
+        // Cursor.lockState = CursorLockMode.Locked; // lock the cursor  
 
         respawnPosition = PlayerController.instance.transform.position; // set the respawn position to the player's position
 
@@ -47,6 +47,12 @@ public class GameManager : MonoBehaviour
         PlayerController.instance.transform.position = respawnPosition; // set the player's position to the respawn position
         CameraController.instance.theCMBrain.enabled = true; // enable the cinemachine brain        
         PlayerController.instance.gameObject.SetActive(true); // activate the player
+    }
+
+    public void SetSpawnPoint(Vector3 newSpawnPoint)
+    {
+        respawnPosition = newSpawnPoint; // set the respawn position to the new spawn point
+        Debug.Log("Spawn point set to: " + respawnPosition);
     }
 
 }
