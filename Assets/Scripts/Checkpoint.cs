@@ -5,6 +5,7 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     public GameObject cpOn, cpOff; // the checkpoint on and off sprites
+    public int soundToPlay;
     
 
     // Start is called before the first frame update
@@ -36,7 +37,7 @@ public class Checkpoint : MonoBehaviour
 
             cpOff.SetActive(false);
             cpOn.SetActive(true);
-
+            AudioManager.instance.PlaySFX(soundToPlay);
         }
     }
 }

@@ -69,7 +69,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cpOn: {fileID: 8708284680446497156}
-  cpOff: {fileID: 0}
+  cpOff: {fileID: 515545548450646271}
+  soundToPlay: 4
 --- !u!1 &5207442322990224955
 GameObject:
   m_ObjectHideFlags: 0
@@ -4968,6 +4969,11 @@ PrefabInstance:
 --- !u!4 &515545548450223327 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: b5610ff0bbbbe3749a471e9c85a97444, type: 3}
+  m_PrefabInstance: {fileID: 515545548450614877}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &515545548450646271 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: b5610ff0bbbbe3749a471e9c85a97444, type: 3}
   m_PrefabInstance: {fileID: 515545548450614877}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8708284680446465830

@@ -69,6 +69,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healAmount: 1
   isFullHeal: 1
+  pickupEffect: {fileID: 8219172339066491768, guid: 98b69f990fe800242b42556fa07ca40b, type: 3}
+  soundToPlay: 7
 --- !u!1001 &6498951559943098885
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class HealthManager : MonoBehaviour
     public float invincibleLength = 2f;
     private float invincibleCounter;
     public Sprite[] healthBarImages;
+     public int soundToPlay;
 
     private void Awake()
     {
@@ -68,6 +69,7 @@ public class HealthManager : MonoBehaviour
                 invincibleCounter = invincibleLength;
             }
             UpdateUI();
+            AudioManager.instance.PlaySFX(soundToPlay);
         }
     }
 
@@ -119,6 +121,7 @@ public class HealthManager : MonoBehaviour
     {
         currentHealth = 0;
         UpdateUI();
+        AudioManager.instance.PlaySFX(soundToPlay);
     }
 
 }
