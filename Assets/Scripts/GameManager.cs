@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance; 
+    public static GameManager instance;
 
     private Vector3 respawnPosition;
     public GameObject deathEffect;
+    public int currentCoins;
 
     private void Awake()
     {
@@ -19,9 +20,8 @@ public class GameManager : MonoBehaviour
     {
         // Cursor.visible = false; // hide the cursor      
         // Cursor.lockState = CursorLockMode.Locked; // lock the cursor  
-
         respawnPosition = PlayerController.instance.transform.position; // set the respawn position to the player's position
-
+        AddCoins(0); // add 0 coins
     }
 
     // Update is called once per frame
@@ -32,20 +32,21 @@ public class GameManager : MonoBehaviour
 
     public void Respawn()
     {
-        Debug.Log("I am respawning");
+        Debug.Log("Player is respawning");
         StartCoroutine(RespawnCo());
+        HealthManager.instance.PlayerKilled();
     }
 
     public IEnumerator RespawnCo()
     {
-        PlayerController.instance.gameObject.SetActive(false); 
+        PlayerController.instance.gameObject.SetActive(false);
         CameraController.instance.theCMBrain.enabled = false;
-        UIManager.instance.fadeToBlack = true; 
-        Instantiate(deathEffect, PlayerController.instance.transform.position+new Vector3(0f,1f,0f), PlayerController.instance.transform.rotation); 
+        UIManager.instance.fadeToBlack = true;
+        Instantiate(deathEffect, PlayerController.instance.transform.position + new Vector3(0f, 1f, 0f), PlayerController.instance.transform.rotation);
 
         yield return new WaitForSeconds(2f);
 
-        HealthManager.instance.ResetHealth(); 
+        HealthManager.instance.ResetHealth();
         UIManager.instance.fadeFromBlack = true; // fade from black
         PlayerController.instance.transform.position = respawnPosition; // set the player's position to the respawn position
         CameraController.instance.theCMBrain.enabled = true; // enable the cinemachine brain        
@@ -56,6 +57,13 @@ public class GameManager : MonoBehaviour
     {
         respawnPosition = newSpawnPoint; // set the respawn position to the new spawn point
         Debug.Log("Spawn point set to: " + respawnPosition);
+    }
+
+    public void AddCoins(int coinsToAdd)
+    {
+        currentCoins += coinsToAdd; // add the coins to the current coins
+        UIManager.instance.coinText.text = "" + currentCoins; // update the coin text
+
     }
 
 }

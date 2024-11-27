@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
     public Image blackScreen; // reference to the black screen
     public float fadeSpeed = 2f; // the speed of the fade
     public bool fadeToBlack, fadeFromBlack;
+    public Text healthText; 
+    public Image healthImage;
+    public Text coinText;
 
     private void Awake()
     {
