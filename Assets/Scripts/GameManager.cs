@@ -27,7 +27,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape)) // if the escape key is pressed
+        {
+            PauseUnpause(); // pause or unpause the game
+        }
     }
 
     public void Respawn()
@@ -66,4 +69,22 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void PauseUnpause()
+    {
+        if (UIManager.instance.pauseScreen.activeInHierarchy) // if the pause screen is active
+        {
+            UIManager.instance.pauseScreen.SetActive(false); // deactivate the pause screen
+            Time.timeScale = 1f; // set the time scale to 1
+            // Cursor.visible = false; // hide the cursor
+            // Cursor.lockState = CursorLockMode.Locked; // lock the cursor
+        }
+        else // if the pause screen is not active
+        {
+            UIManager.instance.pauseScreen.SetActive(true); 
+            UIManager.instance.CloseOptions(); 
+            Time.timeScale = 0f; 
+            // Cursor.visible = true; // show the cursor
+            // Cursor.lockState = CursorLockMode.None; // unlock the cursor
+        }
+    }
 }

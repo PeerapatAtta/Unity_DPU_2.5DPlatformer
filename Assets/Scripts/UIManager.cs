@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
     public Text healthText; 
     public Image healthImage;
     public Text coinText;
+    public GameObject pauseScreen;
+    public GameObject optionsScreen;
+    public Slider musicVolSlider, sfxVolSlider;
 
     private void Awake()
     {
@@ -24,7 +27,6 @@ public class UIManager : MonoBehaviour
     {
 
     }
-    //****
 
     // Update is called once per frame
     void Update()
@@ -46,5 +48,40 @@ public class UIManager : MonoBehaviour
                 fadeFromBlack = false; // set the fade from black to false
             }
         }
+    }
+
+    public void Resume()
+    {
+        GameManager.instance.PauseUnpause(); // pause or unpause the game
+    }
+
+    public void OpenOptions()
+    {
+        optionsScreen.SetActive(true); // activate the options screen
+    }
+
+    public void CloseOptions()
+    {
+        optionsScreen.SetActive(false); // deactivate the options screen
+    }
+
+    public void LevelSelect()
+    {
+        Debug.Log("Level Select");
+    }
+
+    public void MainMenu()
+    {
+        Debug.Log("Main Menu");
+    }
+
+    public void SetMusicLevel()
+    {
+        AudioManager.instance.SetMusicLevel(); 
+    }
+
+    public void SetSFXLevel()
+    {
+        AudioManager.instance.SetSFXLevel();
     }
 }
