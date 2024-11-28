@@ -2,24 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance; // reference to the UI manager
+    public static UIManager instance;
 
     public Image blackScreen; // reference to the black screen
     public float fadeSpeed = 2f; // the speed of the fade
     public bool fadeToBlack, fadeFromBlack;
-    public Text healthText; 
+    public Text healthText;
     public Image healthImage;
     public Text coinText;
     public GameObject pauseScreen;
     public GameObject optionsScreen;
     public Slider musicVolSlider, sfxVolSlider;
+    public string levelSelect, mainMenu;
 
     private void Awake()
     {
-        instance = this; // set the instance to this UI manager
+        instance = this;
     }
 
     // Start is called before the first frame update
@@ -67,17 +69,17 @@ public class UIManager : MonoBehaviour
 
     public void LevelSelect()
     {
-        Debug.Log("Level Select");
+        SceneManager.LoadScene(levelSelect); // load the level select scene
     }
 
     public void MainMenu()
     {
-        Debug.Log("Main Menu");
+        SceneManager.LoadScene(mainMenu); // load the main menu scene
     }
 
     public void SetMusicLevel()
     {
-        AudioManager.instance.SetMusicLevel(); 
+        AudioManager.instance.SetMusicLevel();
     }
 
     public void SetSFXLevel()
