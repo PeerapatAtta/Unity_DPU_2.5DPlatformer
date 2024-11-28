@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject[] playerPieces;
 
+    public bool stopMove;
+
     private void Awake()
     {
         instance = this; // set the instance to this player controller
@@ -38,34 +40,33 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isKnocking)
+        if (!isKnocking && !stopMove) // if the player is not knocking back
         {
-            float yStore = moveDirection.y; // store the y value of the move direction
-            moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal")); // get the input from the player
-            moveDirection.Normalize(); // normalize the input that is the player can't move faster diagonally
-            moveDirection = moveDirection * moveSpeed; // multiply the input by the move speed
-            moveDirection.y = yStore; // set the y value of the move direction to the stored y value
+            float yStore = moveDirection.y;
 
-            if (charController.isGrounded) // if the player is on the ground
+            // รับค่าเคลื่อนไหวเฉพาะในแกน X และล็อกแกน Z
+            moveDirection = new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed, 0f, 0f);
+            moveDirection.y = yStore;
+
+            if (charController.isGrounded)
             {
-                // moveDirection.y = 0f;
-
                 if (Input.GetButtonDown("Jump"))
                 {
                     moveDirection.y = jumpForce;
                 }
             }
 
+            // เพิ่มแรงโน้มถ่วง
             moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
 
-            // transform.position = transform.position + (moveDirection * Time.deltaTime * moveSpeed); // move the player
-            charController.Move(moveDirection * Time.deltaTime); // move the player
+            // เคลื่อนที่ Player
+            charController.Move(moveDirection * Time.deltaTime);
 
-            if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0) // if the player is moving
+            // จัดการการหมุนตัวของ Player
+            if (Input.GetAxisRaw("Horizontal") != 0)
             {
-                transform.rotation = Quaternion.Euler(0f, theCam.transform.eulerAngles.y, 0f); // rotate the player to face the direction of the camera
-                Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z)); // for the player to face the direction of the movement
-                playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime); // rotate the player model
+                Quaternion newRotation = Quaternion.LookRotation(Vector3.right * Input.GetAxisRaw("Horizontal")); // หันหน้า Player ตามแกน X
+                playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
             }
         }
 
@@ -74,16 +75,15 @@ public class PlayerController : MonoBehaviour
             knockBackCounter -= Time.deltaTime;
 
             float yStore = moveDirection.y;
-            moveDirection = playerModel.transform.forward * -knockBackPower.x;
+            moveDirection = new Vector3(-knockBackPower.x, 0f, 0f); // เคลื่อนที่ในแกน X เท่านั้น
             moveDirection.y = yStore;
 
             if (charController.isGrounded)
             {
-                moveDirection.y = 0f; 
+                moveDirection.y = 0f;
             }
 
             moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
-
             charController.Move(moveDirection * Time.deltaTime);
 
             if (knockBackCounter <= 0)
@@ -92,8 +92,15 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        anim.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z)); // set the speed of the player model
-        anim.SetBool("Grounded", charController.isGrounded); // set the grounded state of the player model for the jump animation
+        if (stopMove)
+        {
+            moveDirection = Vector3.zero;
+            moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
+            charController.Move(moveDirection);
+        }
+
+        anim.SetFloat("Speed", Mathf.Abs(moveDirection.x)); // ใช้เฉพาะแกน X
+        anim.SetBool("Grounded", charController.isGrounded);
     }
 
     public void KnockBack()

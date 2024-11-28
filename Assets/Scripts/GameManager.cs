@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,10 +10,13 @@ public class GameManager : MonoBehaviour
     private Vector3 respawnPosition;
     public GameObject deathEffect;
     public int currentCoins;
+    public int levelEndMusic = 8;
+    public string levelToLoad;
+    public bool isRespawning;
 
     private void Awake()
     {
-        instance = this; // set the instance to this game manager
+        instance = this;
     }
 
     // Start is called before the first frame update
@@ -35,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     public void Respawn()
     {
-        Debug.Log("Player is respawning");
+        // Debug.Log("Player is respawning");
         StartCoroutine(RespawnCo());
         HealthManager.instance.PlayerKilled();
     }
@@ -49,6 +53,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
+        isRespawning = true;
         HealthManager.instance.ResetHealth();
         UIManager.instance.fadeFromBlack = true; // fade from black
         PlayerController.instance.transform.position = respawnPosition; // set the player's position to the respawn position
@@ -80,11 +85,23 @@ public class GameManager : MonoBehaviour
         }
         else // if the pause screen is not active
         {
-            UIManager.instance.pauseScreen.SetActive(true); 
-            UIManager.instance.CloseOptions(); 
-            Time.timeScale = 0f; 
+            UIManager.instance.pauseScreen.SetActive(true);
+            UIManager.instance.CloseOptions();
+            Time.timeScale = 0f;
             // Cursor.visible = true; // show the cursor
             // Cursor.lockState = CursorLockMode.None; // unlock the cursor
         }
+    }
+
+    public IEnumerator LevelEndCo()
+    {
+        AudioManager.instance.PlayMusic(levelEndMusic); 
+        PlayerController.instance.stopMove = true;
+
+        yield return new WaitForSeconds(2f); 
+
+        Debug.Log("Level has ended");
+        SceneManager.LoadScene(levelToLoad); 
+
     }
 }
