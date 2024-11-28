@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
     public float gravityScale = 5f;
+    public float bounceForce = 8f;
     private Vector3 moveDirection;
     public CharacterController charController;
     private Camera theCam;
@@ -101,6 +102,12 @@ public class PlayerController : MonoBehaviour
         knockBackCounter = knockBackLength;
         Debug.Log("Knockback");
         moveDirection.y = knockBackPower.y;
+        charController.Move(moveDirection * Time.deltaTime);
+    }
+
+    public void Bounce()
+    {
+        moveDirection.y = bounceForce;
         charController.Move(moveDirection * Time.deltaTime);
     }
 }
