@@ -867,9 +867,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3056519868088149908, guid: c740a49527ec7cf478e338b6766660c8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4871247557696969954, guid: c740a49527ec7cf478e338b6766660c8, type: 3}
       propertyPath: m_Name
       value: LevelPack
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040367927390627401, guid: c740a49527ec7cf478e338b6766660c8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9993401
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040367927390627401, guid: c740a49527ec7cf478e338b6766660c8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.03632498
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040367927390627401, guid: c740a49527ec7cf478e338b6766660c8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.000000030682124
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040367927390627401, guid: c740a49527ec7cf478e338b6766660c8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0000000015155984
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

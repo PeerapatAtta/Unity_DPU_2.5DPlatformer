@@ -5,55 +5,45 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public string firstLevel, levelSelect;
-    public GameObject continueButton;
+    public GameObject levelSelectPanel, mainMenuPanel;
     public string[] levelNames;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        if(PlayerPrefs.HasKey("Continue")) // If the player has a saved game
-        {
-            continueButton.SetActive(true);
-        } else
-        {
-            ResetProgress();
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void NewGame()
     {
-        SceneManager.LoadScene(firstLevel);
-
-        PlayerPrefs.SetInt("Continue", 0);
-        PlayerPrefs.SetString("CurrentLevel", firstLevel);
-
-        ResetProgress();
+        SceneManager.LoadScene(levelNames[0]);
     }
 
-    public void Continue()
+    public void Level1()
     {
-        SceneManager.LoadScene(levelSelect);
+        SceneManager.LoadScene(levelNames[0]);
+    }
+
+    public void Level2()
+    {
+        SceneManager.LoadScene(levelNames[1]);
+    }
+
+    public void Level3()
+    {
+        SceneManager.LoadScene(levelNames[2]);
+    }
+
+    public void OpenLevelSelect()
+    {
+        levelSelectPanel.SetActive(true);
+        mainMenuPanel.SetActive(false);
+    }
+
+    public void CloseLevelSelect()
+    {
+        levelSelectPanel.SetActive(false);
+        mainMenuPanel.SetActive(true);
     }
 
     public void QuitGame()
     {
         Debug.Log("Quit Game");
         Application.Quit();
-    }
-
-    public void ResetProgress()
-    {
-        for(int i = 0; i < levelNames.Length; i++)
-        {
-            PlayerPrefs.SetInt(levelNames[i] + "_unlocked", 0);
-        }
     }
 }
 

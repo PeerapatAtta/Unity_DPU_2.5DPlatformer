@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject deathEffect;
     public int currentCoins;
     public int levelEndMusic = 8;
-    public string levelToLoad;
+    public string sceneName;
     public bool isRespawning;
 
     private void Awake()
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f); 
 
         Debug.Log("Level has ended");
-        SceneManager.LoadScene(levelToLoad); 
+        SceneManager.LoadScene(sceneName); 
 
     }
 }
