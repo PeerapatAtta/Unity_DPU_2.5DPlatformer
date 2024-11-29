@@ -1175,6 +1175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelSelectPanel: {fileID: 2035061817}
   mainMenuPanel: {fileID: 429983045}
+  mainMenuScene: MainMenu
   levelNames:
   - Level1
   - Level2

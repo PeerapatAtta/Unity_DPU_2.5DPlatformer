@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     public GameObject pauseScreen;
     public GameObject optionsScreen;
     public Slider musicVolSlider, sfxVolSlider;
-    public string levelSelect, mainMenu;
+    public string mainMenu;
 
     private void Awake()
     {
@@ -65,11 +65,6 @@ public class UIManager : MonoBehaviour
     public void CloseOptions()
     {
         optionsScreen.SetActive(false); // deactivate the options screen
-    }
-
-    public void LevelSelect()
-    {
-        SceneManager.LoadScene(levelSelect); // load the level select scene
     }
 
     public void MainMenu()

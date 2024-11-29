@@ -6,7 +6,25 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GameObject levelSelectPanel, mainMenuPanel;
+    public string mainMenuScene;
     public string[] levelNames;
+
+    public void OpenLevelSelect()
+    {
+        levelSelectPanel.SetActive(true);
+        mainMenuPanel.SetActive(false);
+    }
+
+    public void CloseLevelSelect()
+    {
+        levelSelectPanel.SetActive(false);
+        mainMenuPanel.SetActive(true);
+    }
+
+    public void GoMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuScene);
+    }
 
     public void NewGame()
     {
@@ -26,18 +44,6 @@ public class MainMenu : MonoBehaviour
     public void Level3()
     {
         SceneManager.LoadScene(levelNames[2]);
-    }
-
-    public void OpenLevelSelect()
-    {
-        levelSelectPanel.SetActive(true);
-        mainMenuPanel.SetActive(false);
-    }
-
-    public void CloseLevelSelect()
-    {
-        levelSelectPanel.SetActive(false);
-        mainMenuPanel.SetActive(true);
     }
 
     public void QuitGame()
