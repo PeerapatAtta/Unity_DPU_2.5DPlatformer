@@ -9,37 +9,54 @@ public class GameManager : MonoBehaviour
 
     private Vector3 respawnPosition;
     public GameObject deathEffect;
-    public int currentCoins;
+    public int maxHealth = 5;
     public int levelEndMusic = 8;
     public string sceneName;
     public bool isRespawning;
 
+    // ใช้ Static Variables สำหรับ HP และ Coins
+    public static int currentCoins = 0;
+    public static int currentHealth;
+
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;         
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        // Cursor.visible = false; // hide the cursor      
-        // Cursor.lockState = CursorLockMode.Locked; // lock the cursor  
-        respawnPosition = PlayerController.instance.transform.position; // set the respawn position to the player's position
-        AddCoins(0); // add 0 coins
+        // ตรวจสอบว่า currentHealth และ currentCoins ถูกเซ็ตไว้แล้วหรือยัง
+        if (currentHealth == 0) // ถ้ายังไม่มีค่า (กรณีที่เป็น 0 คือค่าเริ่มต้น)
+        {
+            currentHealth = maxHealth; // เซ็ตค่า HP เริ่มต้น
+        }
+
+        if (currentCoins == 0) // ตรวจสอบค่า Coins ว่าเคยถูกเซ็ตหรือไม่
+        {
+            currentCoins = 0; // กำหนดค่าเริ่มต้นถ้าไม่มีค่า
+        }
+
+        respawnPosition = PlayerController.instance.transform.position; // เซ็ตตำแหน่ง Spawn
+        UIManager.instance.UpdateUI(); // อัปเดต UI
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) // if the escape key is pressed
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseUnpause(); // pause or unpause the game
+            PauseUnpause();
         }
     }
 
     public void Respawn()
     {
-        // Debug.Log("Player is respawning");
         StartCoroutine(RespawnCo());
         HealthManager.instance.PlayerKilled();
     }
@@ -55,53 +72,54 @@ public class GameManager : MonoBehaviour
 
         isRespawning = true;
         HealthManager.instance.ResetHealth();
-        UIManager.instance.fadeFromBlack = true; // fade from black
-        PlayerController.instance.transform.position = respawnPosition; // set the player's position to the respawn position
-        CameraController.instance.theCMBrain.enabled = true; // enable the cinemachine brain        
-        PlayerController.instance.gameObject.SetActive(true); // activate the player
+        UIManager.instance.fadeFromBlack = true;
+        PlayerController.instance.transform.position = respawnPosition;
+        CameraController.instance.theCMBrain.enabled = true;
+        PlayerController.instance.gameObject.SetActive(true);
     }
 
     public void SetSpawnPoint(Vector3 newSpawnPoint)
     {
-        respawnPosition = newSpawnPoint; // set the respawn position to the new spawn point
+        respawnPosition = newSpawnPoint;
         Debug.Log("Spawn point set to: " + respawnPosition);
     }
 
     public void AddCoins(int coinsToAdd)
     {
-        currentCoins += coinsToAdd; // add the coins to the current coins
-        UIManager.instance.coinText.text = "" + currentCoins; // update the coin text
+        currentCoins += coinsToAdd;
+        UIManager.instance.UpdateUI();
+    }
 
+    public void ResetCoinsAndHealth()
+    {
+        currentCoins = 0;
+        currentHealth = maxHealth;
+        UIManager.instance.UpdateUI();
     }
 
     public void PauseUnpause()
     {
-        if (UIManager.instance.pauseScreen.activeInHierarchy) // if the pause screen is active
+        if (UIManager.instance.pauseScreen.activeInHierarchy)
         {
-            UIManager.instance.pauseScreen.SetActive(false); // deactivate the pause screen
-            Time.timeScale = 1f; // set the time scale to 1
-            // Cursor.visible = false; // hide the cursor
-            // Cursor.lockState = CursorLockMode.Locked; // lock the cursor
+            UIManager.instance.pauseScreen.SetActive(false);
+            Time.timeScale = 1f;
         }
-        else // if the pause screen is not active
+        else
         {
             UIManager.instance.pauseScreen.SetActive(true);
             UIManager.instance.CloseOptions();
             Time.timeScale = 0f;
-            // Cursor.visible = true; // show the cursor
-            // Cursor.lockState = CursorLockMode.None; // unlock the cursor
         }
     }
 
     public IEnumerator LevelEndCo()
     {
-        AudioManager.instance.PlayMusic(levelEndMusic); 
+        AudioManager.instance.PlayMusic(levelEndMusic);
         PlayerController.instance.stopMove = true;
 
-        yield return new WaitForSeconds(2f); 
+        yield return new WaitForSeconds(2f);
 
         Debug.Log("Level has ended");
-        SceneManager.LoadScene(sceneName); 
-
+        SceneManager.LoadScene(sceneName);
     }
 }
