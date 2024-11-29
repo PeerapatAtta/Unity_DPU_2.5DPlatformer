@@ -690,6 +690,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathEffect: {fileID: 5881225867825573772, guid: 60ce1de4011ece043acb850fc827322a, type: 3}
   currentCoins: 0
+  levelEndMusic: 8
+  sceneName: 
+  isRespawning: 0
 --- !u!114 &5597578623556664864
 MonoBehaviour:
   m_ObjectHideFlags: 0
