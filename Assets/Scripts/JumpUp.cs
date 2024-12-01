@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedUp : MonoBehaviour
+public class JumpUp : MonoBehaviour
 {
     public GameObject pickupEffect;
     public int pickupSound = 7;
-    public float speedUp = 2f;
+    public float jumpUpFactor = 2f;
     public float playerScale = 2f;
     public float effectDuration = 1f;
     public GameObject canvas;
@@ -26,7 +26,7 @@ public class SpeedUp : MonoBehaviour
 
         Instantiate(pickupEffect, transform.position, transform.rotation);
         AudioManager.instance.PlaySFX(pickupSound);
-        PlayerController.instance.moveSpeed *= speedUp;
+        PlayerController.instance.jumpForce *= jumpUpFactor;
         PlayerController.instance.transform.localScale *= playerScale;
 
 
@@ -38,7 +38,7 @@ public class SpeedUp : MonoBehaviour
 
         yield return new WaitForSeconds(effectDuration);
 
-        PlayerController.instance.moveSpeed /= speedUp;
+        PlayerController.instance.jumpForce /= jumpUpFactor;
         PlayerController.instance.transform.localScale /= playerScale;
 
         Destroy(gameObject);
@@ -46,3 +46,4 @@ public class SpeedUp : MonoBehaviour
 
 
 }
+
