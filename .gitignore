@@ -31,3 +31,6 @@ sysinfo.txt
 # Files created by the OS
 .DS_Store
 Thumbs.db
+
+# Exclude Unity User Settings
+UserSettings/
