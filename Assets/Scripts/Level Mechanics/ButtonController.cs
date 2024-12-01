@@ -10,6 +10,8 @@ public class ButtonController : MonoBehaviour
 
     public bool isOnOff;
 
+    public int soundToPlay; // เสียงที่จะเล่นตอนเก็บ
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class ButtonController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        AudioManager.instance.PlaySFX(soundToPlay);
         if(other.tag == "Player")
         {
             if (isOnOff)
