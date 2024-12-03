@@ -7,7 +7,7 @@ public class HurtEnemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit: " + other.name);
+        // Debug.Log("Hit: " + other.name);
         if (other.tag == "Enemy")
         {
             other.GetComponent<EnemyHealthManager>().TakeDamage();

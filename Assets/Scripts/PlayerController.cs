@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        instance = this; 
+        instance = this;
     }
 
     // Start is called before the first frame update
@@ -45,18 +45,24 @@ public class PlayerController : MonoBehaviour
             float yStore = moveDirection.y;
 
             // รับค่าเคลื่อนไหวเฉพาะในแกน X และล็อกแกน Z
-            moveDirection = new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed, 0f, 0f);
+            // moveDirection = new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed, 0f, 0f);
+            moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal"));
+            moveDirection.Normalize();
+            moveDirection = moveDirection * moveSpeed;
             moveDirection.y = yStore;
 
-            if (charController.isGrounded)
+            if (charController.isGrounded)            
             {
+                // Debug.Log("Player is grounded");
+                moveDirection.y = -9.81f;
+
                 if (Input.GetButtonDown("Jump"))
                 {
                     moveDirection.y = jumpForce;
                 }
             }
 
-            // เพิ่มแรงโน้มถ่วง
+            // เพิ่มแรงโน้มถ่วงให้กับ Player
             moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
 
             // เคลื่อนที่ Player
@@ -117,4 +123,5 @@ public class PlayerController : MonoBehaviour
         moveDirection.y = bounceForce;
         charController.Move(moveDirection * Time.deltaTime);
     }
+
 }

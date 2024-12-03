@@ -31,11 +31,7 @@ public class MovingPlatformScript : MonoBehaviour
     {
         Debug.Log("TriggerEnter");
          other.transform.SetParent(transform);
-
-        // if (other.CompareTag("Player"))
-        // {
-        //     other.transform.SetParent(transform); // ทำให้ Player เป็นลูกของแพลตฟอร์ม
-        // }
+      
     }
 
     private void OnTriggerStay(Collider other) {
@@ -47,10 +43,6 @@ public class MovingPlatformScript : MonoBehaviour
     {
         Debug.Log("TriggerExit");
         other.transform.SetParent(null);
-
-        // if (other.CompareTag("Player"))
-        // {
-        //     other.transform.SetParent(null); // ปลด Player ออกจากแพลตฟอร์ม
-        // }
+      
     }
 }
