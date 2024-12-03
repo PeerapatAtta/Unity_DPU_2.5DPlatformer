@@ -44,9 +44,9 @@ public class PlayerController : MonoBehaviour
         {
             float yStore = moveDirection.y;
 
-            // รับค่าเคลื่อนไหวเฉพาะในแกน X และล็อกแกน Z
+          
             // moveDirection = new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed, 0f, 0f);
-            moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal"));
+            moveDirection = transform.right * Input.GetAxisRaw("Horizontal");
             moveDirection.Normalize();
             moveDirection = moveDirection * moveSpeed;
             moveDirection.y = yStore;
